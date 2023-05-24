@@ -1,22 +1,41 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const cors = require('cors');
 
-const todos = [
-  {
-    todoId: 0,
-    text: 'pese hambad'
-  }
-]
+const app = express();
+const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send(JSON.stringify(todos))
+let todoId = 0;
+let todos = [];
+
+app.use(cors({
+  origin: '*'
+}));
+app.use(express.json());
+
+app.get('/todos', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(todos));
 })
 
-app.post('/', (req, res) => {
-  res.send('Hello post!')
+app.post('/todos', (req, res) => {
+  todos.push({
+    todoId: todoId++,
+    text: req.body.text,
+    isChecked: false
+  });
+  console.log(todos);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(todos));
 })
+
+app.delete('/todos/:todoId', (req, res) => {
+  console.log('kustutame id-ga', req.params.todoId);
+  todos = todos.filter((todo) => todo.todoId !== parseInt(req.params.todoId, 10));
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(todos));
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
 })
