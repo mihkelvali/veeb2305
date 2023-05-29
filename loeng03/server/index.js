@@ -28,10 +28,20 @@ app.post('/todos', (req, res) => {
   res.send(JSON.stringify(todos));
 })
 
+app.put('/todos/:todoId', (req, res) => {
+  console.log('toggle id-ga', req.params.todoId);
+  for (let todo of todos) {
+    if (todo.todoId === parseInt(req.params.todoId, 10)) {
+      todo.isChecked = !todo.isChecked;
+    }
+  }
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(todos));
+});
+
 app.delete('/todos/:todoId', (req, res) => {
   console.log('kustutame id-ga', req.params.todoId);
   todos = todos.filter((todo) => todo.todoId !== parseInt(req.params.todoId, 10));
-
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(todos));
 });

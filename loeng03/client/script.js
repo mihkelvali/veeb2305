@@ -3,6 +3,10 @@ const inputElement = document.querySelector('#input');
 const url = 'http://localhost:3000/todos/';
 
 inputElement.addEventListener('keyup', function (event) {
+  if (inputElement.value === '') {
+    return;
+  }
+
   if (event.key === "Enter") {
     lisaTodo();
   }
@@ -15,6 +19,16 @@ async function lisaTodo() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ text: inputElement.value })
+  }).then((data) => data.json());
+
+  renderdaTodod(response);
+
+  inputElement.value = '';
+}
+
+async function toggleTodo(todoId) {
+  const response = await fetch(url + todoId, {
+    method: 'PUT'
   }).then((data) => data.json());
 
   renderdaTodod(response);
@@ -46,10 +60,15 @@ function renderdaTodod(todos) {
   todoList.innerHTML = '';
 
   for (let todo of todos) {
+    let checkedText = '';
+    if (todo.isChecked) {
+      checkedText = 'checked';
+    }
+
     todoList.innerHTML += `
       <div class="todo">
-        <input type="checkbox" onclick="toggleDone(${todo.todoId})">
-        <span class="text">${todo.text}</span>
+        <input type="checkbox" onclick="toggleTodo(${todo.todoId})" ${checkedText}>
+        <span class="text ${checkedText}">${todo.text}</span>
         <span onclick="kustutaTodo(${todo.todoId})">x</span>
       </div>
     `;
