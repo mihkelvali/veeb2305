@@ -13,7 +13,7 @@ let navItemsList = [
   },
   {
     pealkiri: 'Upcoming treks',
-    viide: 'upcoming.html'
+    viide: 'treks.html'
   },
   {
     pealkiri: 'Treks for family',
@@ -26,5 +26,5 @@ let navItemsList = [
 ];
 
 for (let i = 0; i < navItemsList.length; i++) {
-  navItemsHtml.innerHTML += `<a href="${navItemsList[i].viide}" target="_blank">${navItemsList[i].pealkiri}</a>`;
+  navItemsHtml.innerHTML += `<a href="${navItemsList[i].viide}">${navItemsList[i].pealkiri}</a>`;
 }
