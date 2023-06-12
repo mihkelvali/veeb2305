@@ -162,7 +162,7 @@ async function getTreks() {
     `;
     for (let trek of treks) {
       matkad.innerHTML += `
-        <a onclick="editTrek(${trek.id})" href="javascript:;">${trek.name} ${trek.id}</a>
+        <a onclick="editTrek(${trek.id})" href="javascript:;">${trek.name}</a>
       `;
     }
     matkad.innerHTML += `
