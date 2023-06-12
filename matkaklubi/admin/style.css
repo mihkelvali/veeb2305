@@ -29,7 +29,11 @@
   flex-direction: column;
 }
 
-#uus-matk > button {
+#nupud {
   margin-top: 15px;
+}
+
+#uus-matk button {
+  margin-top: 5px;
   margin-bottom: 5px;
 }
